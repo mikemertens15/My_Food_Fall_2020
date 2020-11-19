@@ -1,7 +1,6 @@
 import 'package:MyFoodLogin/view/FridgePage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class FreezerPage extends StatefulWidget {
@@ -21,8 +20,12 @@ class _FreezerPageState extends State<FreezerPage> {
     final User user = auth.currentUser;
     final uid = user.uid;
 
-    QuerySnapshot qn =
-        await db.collection("Users").doc(uid).collection("Drawer").get();
+    QuerySnapshot qn = await db
+        .collection("Users")
+        .doc(uid)
+        .collection("Drawer")
+        .where("Type", isEqualTo: "Freezer")
+        .get();
 
     return qn.docs;
   }
